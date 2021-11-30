@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Build specified static linux binary from go source
+
+set -eu
+
+ARTIFACT="${1}"
+
+CGO_ENABLED=0 GOOS=linux GOCACHE="${WORKSPACE}" \
+  go build -a -ldflags '-extldflags "-static"' -o "${ARTIFACT}" .
+
+strip "${ARTIFACT}"
